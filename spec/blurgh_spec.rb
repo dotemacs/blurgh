@@ -20,4 +20,12 @@ describe "blurgh" do
     last_response.body.should match("Naslov")
   end
 
+  context "the view" do
+    it "should have a body html elements" do
+      get '/'
+      last_response.body.should match("<body>")
+    end
+  end
+
+
 end

@@ -15,5 +15,6 @@ module Config
 end
 
 get '/' do
-  Config.title
+  @title = Config.title
+  erb :index 
 end
