@@ -5,9 +5,19 @@ describe "blurgh" do
   def app
     @app ||= Sinatra::Application
   end
-  
+
+  before :each do
+    YAML.stub!(:load_file).with("setup.yaml").and_return({"title" => "Naslov"})     
+  end
+
   it "should respond to /" do
     get '/'
     last_response.should be_ok
   end
+
+  it "should have a title" do
+    get '/'
+    last_response.body.should match("Naslov")
+  end
+
 end
