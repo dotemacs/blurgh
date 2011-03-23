@@ -1,0 +1,16 @@
+Gemfile.lock
+
+## Mac OS
+.DS_Store
+ 
+## Textmate
+*.tmproj
+tmtags
+ 
+## Emacs
+*~
+\#*
+.\#*
+ 
+## Vim
+*.swp
