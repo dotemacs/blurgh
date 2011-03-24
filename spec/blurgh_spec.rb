@@ -7,7 +7,7 @@ describe "blurgh" do
   end
 
   before :each do
-    YAML.stub!(:load_file).with("setup.yaml").and_return({"title" => "Naslov"})     
+    YAML.should_receive(:load_file).with("setup.yaml").and_return({"title" => "Naslov"}) 
   end
 
   it "should respond to /" do
