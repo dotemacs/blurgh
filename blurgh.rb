@@ -7,6 +7,10 @@ module Config
   def self.title
     options["title"]
   end
+
+  def self.store
+    options["store"]
+  end
   
   private
   def self.options

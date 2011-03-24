@@ -23,4 +23,12 @@ describe "Config" do
       Config.title.should be_nil
     end
   end
+
+  describe ".store" do
+    it "should return value" do
+      YAML.should_receive(:load_file).with("setup.yaml").and_return({"store" => "posts"}) 
+      Config.store.should match("posts")
+    end
+  end
+
 end  
