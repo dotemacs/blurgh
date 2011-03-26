@@ -4,6 +4,10 @@ require 'sinatra'
 require 'yaml'
 
 module Config
+  def self.all
+    options
+  end
+
   def self.title
     options["title"]
   end
@@ -18,13 +22,12 @@ module Config
   end
 end
 
-def get_posts
+def get_posts(store)
 
   all_posts = Hash.new {
     |h,k| h[k] = Hash.new(&h.default_proc) 
   }
 
-  store = Config.store
   post_dir = File.join(store + "/" + "*.md")
 
   Dir.glob(post_dir).each do |post|
@@ -40,6 +43,8 @@ def get_posts
 end
 
 get '/' do
-  @title = Config.title
+  blurgh_conf = Config.all
+  @title = blurgh_conf['title']
+  @posts = get_posts(blurgh_conf['store'])
   erb :index 
 end
