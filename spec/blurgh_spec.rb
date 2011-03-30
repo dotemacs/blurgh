@@ -65,4 +65,17 @@ describe "blurgh" do
 
   end
 
+  describe "get_post" do
+
+    before do
+      YAML.should_receive(:load_file).with("setup.yaml")\
+        .and_return({"title" => "Naslov", "store" => "spec/fixtures"})
+    end
+
+    it "should return a post in two parts" do
+      get_post("o-kapadokiji").should have(2).parts
+    end
+
+  end
+
 end

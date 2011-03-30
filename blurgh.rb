@@ -42,6 +42,10 @@ def get_posts(store)
 
 end
 
+def get_post(post)
+  header, body = File.readlines(Config.options['store'] + "/" + post + ".md", "")
+end
+
 get '/' do
   blurgh_conf = Config.all
   @title = blurgh_conf['title']
