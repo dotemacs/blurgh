@@ -54,6 +54,13 @@ describe "blurgh" do
         last_response.body.should match("let")
         last_response.body.should match("o-kapadokiji")
       end
+
+      it "the posts titles should be shown" do
+        get '/'
+        last_response.body.should match('<a href="let">Авионски лет</a>')
+        last_response.body.should match('<a href="o-kapadokiji">Кападокија</a>')
+      end
+
     end
 
   end
