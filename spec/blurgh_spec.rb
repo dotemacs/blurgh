@@ -19,7 +19,7 @@ describe "blurgh" do
       last_response.should be_ok
     end
 
-    context "the view" do
+    context "the index view" do
 
       it "should have a title" do
         get '/'
@@ -38,6 +38,15 @@ describe "blurgh" do
       end
 
     end
+
+    context "the post view" do
+      it "should show post content" do
+        get '/let'
+        article = File.readlines("spec/fixtures/let.md", "")[1]
+        last_response.body.should match(article)
+      end
+    end
+
   end
 
   describe "get_posts" do
