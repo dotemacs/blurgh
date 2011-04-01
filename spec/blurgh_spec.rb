@@ -45,6 +45,14 @@ describe "blurgh" do
         article = File.readlines("spec/fixtures/let.md", "")[1]
         last_response.body.should match(article)
       end
+
+      it "should show post title" do
+        get '/let'
+        config = File.readlines("spec/fixtures/let.md", "")[0]
+        post_options = YAML.load(config)
+        last_response.body.should match("Авионски лет")
+      end
+
     end
 
   end
