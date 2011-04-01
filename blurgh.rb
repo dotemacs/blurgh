@@ -55,6 +55,8 @@ end
 
 get '/:post' do
   @config, @content = get_post(params[:post])
-  @title = YAML.load(@config)['title']
+  post_options = YAML.load(@config)
+  @title = post_options['title']
+  @date =  post_options['date']
   erb :post
 end
