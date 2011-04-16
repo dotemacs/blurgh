@@ -47,8 +47,17 @@ def get_posts(store)
 end
 
 def get_post(post)
-  header, body = File.readlines(Config.options['store'] + "/" + post + ".md", "")
+  begin
+    header, body = File.readlines(Config.options['store'] + "/" + post + ".md", "")
+  rescue Errno::ENOENT
+    not_found
+  end
 end
+
+not_found do
+  "Nothing to see here"
+end
+
 
 get '/' do
   blurgh_conf = Config.all

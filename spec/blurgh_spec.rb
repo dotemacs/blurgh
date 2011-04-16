@@ -62,6 +62,13 @@ describe "blurgh" do
 
     end
 
+    describe "error page" do
+      it "should display a pre defined 404 message" do
+        get '/non-existent-page'
+        last_response.body.should match("Nothing to see here")
+      end
+    end
+
   end
 
   describe "get_posts" do
