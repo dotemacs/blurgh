@@ -2,6 +2,7 @@
 
 require 'sinatra'
 require 'yaml'
+require 'builder'
 
 module Config
   def self.title
@@ -58,6 +59,12 @@ not_found do
   "Nothing to see here"
 end
 
+get '/feed.xml' do
+  blurgh_conf = Config.all
+  @title = blurgh_conf['title']
+  @posts = get_posts(blurgh_conf['store'])
+  builder :feed
+end
 
 get '/' do
   blurgh_conf = Config.all
@@ -73,3 +80,5 @@ get '/:post' do
   @date =  post_options['date']
   erb :post
 end
+
+

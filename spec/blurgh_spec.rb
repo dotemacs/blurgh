@@ -62,13 +62,66 @@ describe "blurgh" do
 
     end
 
+    describe "feed.xml" do
+      it "should respond to /feed.xml" do
+        get '/feed.xml'
+        last_response.should be_ok
+      end
+
+      context "format" do
+        it "should return XML" do
+          get '/feed.xml'
+          last_response.headers['Content-Type'].should match("application/xml")
+        end
+
+        it "should return XML version" do
+          get '/feed.xml'
+          last_response.body.to_s.should match("version=\"1.0\"")
+        end
+
+        it "should return xmlns" do
+          get '/feed.xml'
+          last_response.body.to_s.should match("xmlns=\"http:\/\/www.w3.org\/2005\/Atom\"")
+        end
+      end
+      
+      it "should have a title" do
+        get '/feed.xml'
+        last_response.body.to_s.should match("<title>")
+      end
+
+      it "should have a subtitle" do
+        pending "add the subtitle later" do
+          get '/feed.xml'
+          last_response.body.to_s.should match("<subtitle>")
+        end
+      end
+      
+      context "posts" do
+        it "should have posts" do
+          get '/feed.xml'
+          last_response.body.to_s.should match("<entry>")
+        end
+
+        it "should have titles" do
+          get '/feed.xml'
+          last_response.body.to_s.should match("<title>")
+        end
+
+        it "should have a link"
+        it "should have a id"
+        it "should have a published time"
+        it "should have post body"
+      end
+
+    end
+
     describe "error page" do
       it "should display a pre defined 404 message" do
         get '/non-existent-page'
         last_response.body.should match("Nothing to see here")
       end
     end
-
   end
 
   describe "get_posts" do
