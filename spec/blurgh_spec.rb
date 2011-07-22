@@ -84,7 +84,7 @@ describe "blurgh" do
           last_response.body.to_s.should match("xmlns=\"http:\/\/www.w3.org\/2005\/Atom\"")
         end
       end
-      
+
       it "should have a title" do
         get '/feed.xml'
         last_response.body.to_s.should match("<title>")
@@ -96,22 +96,37 @@ describe "blurgh" do
           last_response.body.to_s.should match("<subtitle>")
         end
       end
-      
+
       context "posts" do
         it "should have posts" do
           get '/feed.xml'
           last_response.body.to_s.should match("<entry>")
         end
 
-        it "should have titles" do
+        xit "should have titles" do
+          article = File.readlines("spec/fixtures/let.md", "")[1]
           get '/feed.xml'
-          last_response.body.to_s.should match("<title>")
         end
 
-        it "should have a link"
-        it "should have a id"
-        it "should have a published time"
-        it "should have post body"
+        it "should have a link" do
+          get '/feed.xml'
+          last_response.body.to_s.should match("<link>")
+        end
+        it "should have a id" do
+          get '/feed.xml'
+          last_response.body.to_s.should match("<id>")
+        end
+
+        it "should have a published time" do
+          get '/feed.xml'
+          last_response.body.to_s.should match("<updated>")
+        end
+
+        it "should have post body" do
+          get '/feed.xml'
+          last_response.body.to_s.should match("<body>")
+          # puts last_response.body
+        end
       end
 
     end
