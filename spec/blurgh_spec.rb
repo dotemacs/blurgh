@@ -44,6 +44,13 @@ describe "blurgh" do
         last_response.body.should match('<a href="o-kapadokiji">Кападокија</a>')
       end
 
+      it "should have the atom feed link" do
+        get '/'
+        last_response.body.should =~ /<link\shref=\"feed.xml\"\
+\stype=\"application\/atom\+xml\"\srel=\"alternate\"\stitle=\"Naslov\"\s\/>/
+      end
+
+
     end
 
     context "the post view" do
@@ -56,15 +63,19 @@ describe "blurgh" do
       it "should show post title" do
         get '/let'
         config = File.readlines("spec/fixtures/let.md", "")[0]
-        post_options = YAML.load(config)
         last_response.body.should match("Авионски лет")
       end
 
       it "should show post date" do
         get '/let'
         config = File.readlines("spec/fixtures/let.md", "")[0]
-        post_options = YAML.load(config)
         last_response.body.should match("20110325")
+      end
+
+      it "should have the atom feed link" do
+        get '/let'
+        last_response.body.should =~ /<link\shref=\"feed.xml\"\
+\stype=\"application\/atom\+xml\"\srel=\"alternate\"\stitle=\"/
       end
     end
 
