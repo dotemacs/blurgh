@@ -17,6 +17,10 @@ module Config
     options["title"]
   end
 
+  def self.subtitle
+    options["subtitle"]
+  end
+
   def self.store
     options["store"]
   end

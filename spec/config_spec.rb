@@ -24,6 +24,14 @@ describe "Config" do
     end
   end
 
+  describe ".subtitle" do
+    it "should return value" do
+      YAML.should_receive(:load_file).with("setup.yaml").and_return({"subtitle" => "Blurgh blog"})
+      Config.subtitle.should match("Blurgh blog")
+    end
+  end
+
+
   describe ".store" do
     it "should return value" do
       YAML.should_receive(:load_file).with("setup.yaml").and_return({"store" => "posts"})

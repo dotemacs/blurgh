@@ -112,6 +112,7 @@ describe "blurgh" do
           get '/feed.xml'
           last_response.body.to_s.should match("<link>")
         end
+
         it "should have a id" do
           get '/feed.xml'
           last_response.body.to_s.should match("<id>")
@@ -125,7 +126,6 @@ describe "blurgh" do
         it "should have post body" do
           get '/feed.xml'
           last_response.body.to_s.should match("<body>")
-          # puts last_response.body
         end
       end
 
