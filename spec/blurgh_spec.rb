@@ -97,10 +97,8 @@ describe "blurgh" do
       end
 
       it "should have a subtitle" do
-        #pending "add the subtitle later" do
         get '/feed.xml'
         last_response.body.to_s.should match("<subtitle>")
-        #end
       end
 
       context "posts" do
@@ -109,9 +107,10 @@ describe "blurgh" do
           last_response.body.to_s.should match("<entry>")
         end
 
-        xit "should have titles" do
+        it "should have titles" do
           article = File.readlines("spec/fixtures/let.md", "")[1]
           get '/feed.xml'
+          last_response.body.to_s.should =~ /<entry>\n\s+<title>/
         end
 
         it "should have a link" do
