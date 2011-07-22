@@ -66,6 +66,7 @@ end
 get '/feed.xml' do
   blurgh_conf = Config.all
   @title = blurgh_conf['title']
+  @subtitle = blurgh_conf['subtitle']
   @posts = get_posts(blurgh_conf['store'])
   builder :feed
 end
@@ -73,6 +74,7 @@ end
 get '/' do
   blurgh_conf = Config.all
   @title = blurgh_conf['title']
+  @subtitle = blurgh_conf['subtitle']
   @posts = get_posts(blurgh_conf['store'])
   erb :index
 end

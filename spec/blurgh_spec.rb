@@ -5,7 +5,9 @@ describe "blurgh" do
 
   before :each do
     YAML.should_receive(:load_file)\
-      .and_return({"title" => "Naslov", "store" => "spec/fixtures"})
+      .and_return({"title" => "Naslov",
+                    "subtitle" => "Blurgh subtitle",
+                    "store" => "spec/fixtures"})
   end
 
   def app
@@ -24,6 +26,11 @@ describe "blurgh" do
       it "should have a title" do
         get '/'
         last_response.body.should match("Naslov")
+      end
+
+      it "should have a subtitle" do
+        get '/'
+        last_response.body.should match("Blurgh subtitle")
       end
 
       it "should have a body html elements" do
@@ -59,7 +66,6 @@ describe "blurgh" do
         post_options = YAML.load(config)
         last_response.body.should match("20110325")
       end
-
     end
 
     describe "feed.xml" do
@@ -91,10 +97,10 @@ describe "blurgh" do
       end
 
       it "should have a subtitle" do
-        pending "add the subtitle later" do
-          get '/feed.xml'
-          last_response.body.to_s.should match("<subtitle>")
-        end
+        #pending "add the subtitle later" do
+        get '/feed.xml'
+        last_response.body.to_s.should match("<subtitle>")
+        #end
       end
 
       context "posts" do
