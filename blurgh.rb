@@ -103,6 +103,8 @@ end
 get '/:post' do
   @config, @content = get_post(params[:post])
   post_options = YAML.load(@config)
+  blurgh_conf = Config.all
+  @clicky_id = blurgh_conf['clicky']
   @title = post_options['title']
   @date =  post_options['date']
   erb :post

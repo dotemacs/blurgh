@@ -3,19 +3,19 @@ require 'spec_helper'
 
 describe "blurgh" do
 
-  before :each do
-    YAML.should_receive(:load_file)\
-      .and_return({"title" => "Naslov",
-                    "subtitle" => "Blurgh subtitle",
-                    "store" => "spec/fixtures",
-                    "clicky" => "123456"})
-  end
-
   def app
     @app ||= Sinatra::Application
   end
 
   context "routes and content" do
+
+    before :each do
+      YAML.should_receive(:load_file)\
+        .and_return({"title" => "Naslov",
+                      "subtitle" => "Blurgh subtitle",
+                      "store" => "spec/fixtures",
+                      "clicky" => "123456"})
+    end
 
     it "should respond to /" do
       get '/'
@@ -64,6 +64,15 @@ describe "blurgh" do
     end
 
     context "the post view" do
+      before :each do
+        YAML.should_receive(:load_file)\
+          .and_return({"title" => "Naslov",
+                        "subtitle" => "Blurgh subtitle",
+                        "store" => "spec/fixtures",
+                        "clicky" => "123456"})
+      end
+
+
       it "should show post content" do
         get '/let'
         article = File.readlines("spec/fixtures/let.md", "")
@@ -93,6 +102,18 @@ describe "blurgh" do
         get '/let'
         last_response.body.should match("<strong>this text should be bold</strong>")
       end
+
+      context "clicky" do
+        it "should have the clicky javascript link" do
+          get '/let'
+          last_response.body.should match('<script src=\"http://static.getclicky.com/js\" type=\"text/javascript\"></script>')
+        end
+        it "should have the clicky id" do
+          get '/let'
+          last_response.body.should match('clicky.init\(123456\)')
+        end
+      end
+
     end
 
     describe "feed.xml" do
