@@ -5,6 +5,28 @@ require 'yaml'
 require 'builder'
 require 'maruku'
 
+class BlurghConfig
+  def initialize
+    @options = YAML.load_file("setup.yaml")
+  end
+
+  def title
+    @options['title']
+  end
+
+  def subtitle
+    @options['subtitle']
+  end
+
+  def store
+    @options['store']
+  end
+
+  def clicky
+    @options['clicky']
+  end
+end
+
 module Config
   def self.title
     options["title"]
@@ -96,11 +118,11 @@ get '/feed.xml' do
 end
 
 get '/' do
-  blurgh_conf = Config.all
-  @clicky_id = blurgh_conf['clicky']
-  @title = blurgh_conf['title']
-  @subtitle = blurgh_conf['subtitle']
-  @posts = get_posts(blurgh_conf['store'])
+  config = BlurghConfig.new
+  @clicky_id = config.clicky
+  @title = config.title
+  @subtitle = config.subtitle
+  @posts = get_posts(config.store)
   erb :index
 end
 
