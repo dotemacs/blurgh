@@ -1,4 +1,4 @@
-Simple blog in Sinatra for started as a tutorial for [http://ruby.rs](http://ruby.rs)
+Simple blog in Sinatra which started as a tutorial for [http://ruby.rs](http://ruby.rs)
 
 Usage:
 
