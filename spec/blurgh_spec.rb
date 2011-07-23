@@ -197,7 +197,7 @@ describe "blurgh" do
     it "should return posts" do
       first_article = File.readlines("spec/fixtures/o-kapadokiji.md", "")[1]
       second_article = File.readlines("spec/fixtures/let.md", "")[1]
-      store = Config.all['store']
+      store = BlurghConfig.new.store
 
       get_posts(store).should == \
       [[20110325,  {"url" => "let", "title" => "Авионски лет", "body" => "#{second_article}"}],\

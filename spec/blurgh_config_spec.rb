@@ -46,13 +46,5 @@ describe "BlurghConfig" do
     end
   end
 
-  # describe ".all" do
-  #   it "should return all the values" do
-  #     YAML.should_receive(:load_file).with("setup.yaml")\
-  #       .and_return({"title" => "Naslov", "store" => "posts"})
-  #     Config.all.should == {"title" => "Naslov", "store" => "posts"}
-  #   end
-  # end
-
 end
 

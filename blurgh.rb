@@ -27,36 +27,6 @@ class BlurghConfig
   end
 end
 
-module Config
-  def self.title
-    options["title"]
-  end
-
-  def self.all
-    options
-  end
-
-  def self.title
-    options["title"]
-  end
-
-  def self.subtitle
-    options["subtitle"]
-  end
-
-  def self.store
-    options["store"]
-  end
-
-  def self.clicky
-    options["clicky"]
-  end
-
-  private
-  def self.options
-    YAML.load_file("setup.yaml")
-  end
-end
 
 def get_posts(store)
 
@@ -80,7 +50,7 @@ end
 
 def get_post(post)
   begin
-    file = File.readlines(Config.options['store'] + "/" + post + ".md", "")
+    file = File.readlines(BlurghConfig.new.store + "/" + post + ".md", "")
     header = file[0]
     file.delete_at(0)
     return header, file.join
@@ -110,28 +80,28 @@ helpers do
 end
 
 get '/feed.xml' do
-  blurgh_conf = Config.all
-  @title = blurgh_conf['title']
-  @subtitle = blurgh_conf['subtitle']
-  @posts = get_posts(blurgh_conf['store'])
+  blurgh = BlurghConfig.new
+  @title = blurgh.title
+  @subtitle = blurgh.subtitle
+  @posts = get_posts(blurgh.store)
   builder :feed
 end
 
 get '/' do
-  config = BlurghConfig.new
-  @clicky_id = config.clicky
-  @title = config.title
-  @subtitle = config.subtitle
-  @posts = get_posts(config.store)
+  blurgh = BlurghConfig.new
+  @clicky_id = blurgh.clicky
+  @title = blurgh.title
+  @subtitle = blurgh.subtitle
+  @posts = get_posts(blurgh.store)
   erb :index
 end
 
 get '/:post' do
   @config, @content = get_post(params[:post])
   post_options = YAML.load(@config)
-  blurgh_conf = Config.all
-  @clicky_id = blurgh_conf['clicky']
-  @title = blurgh_conf['title']
+  blurgh = BlurghConfig.new
+  @clicky_id = blurgh.clicky
+  @title = blurgh.title
   @post_title = post_options['title']
   @date =  post_options['date']
   erb :post
