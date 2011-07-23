@@ -39,6 +39,13 @@ describe "Config" do
     end
   end
 
+  describe ".clicky" do
+    it "should return value" do
+      YAML.should_receive(:load_file).with("setup.yaml").and_return({"clicky" => "123456"})
+      Config.clicky.should match("123456")
+    end
+  end
+
   describe ".all" do
     it "should return all the values" do
       YAML.should_receive(:load_file).with("setup.yaml")\

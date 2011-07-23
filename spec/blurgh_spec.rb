@@ -7,7 +7,8 @@ describe "blurgh" do
     YAML.should_receive(:load_file)\
       .and_return({"title" => "Naslov",
                     "subtitle" => "Blurgh subtitle",
-                    "store" => "spec/fixtures"})
+                    "store" => "spec/fixtures",
+                    "clicky" => "123456"})
   end
 
   def app
@@ -50,6 +51,16 @@ describe "blurgh" do
 \stype=\"application\/atom\+xml\"\srel=\"alternate\"\stitle=\"Naslov\"\s\/>/
       end
 
+      context "clicky" do
+        it "should have the clicky javascript link" do
+          get '/'
+          last_response.body.should match('<script src=\"http://static.getclicky.com/js\" type=\"text/javascript\"></script>')
+        end
+        it "should have the clicky id" do
+          get '/'
+          last_response.body.should match('clicky.init\(123456\)')
+        end
+      end
     end
 
     context "the post view" do
