@@ -47,8 +47,8 @@ describe "blurgh" do
 
       it "should have the atom feed link" do
         get '/'
-        last_response.body.should =~ /<link\shref=\"feed.xml\"\
-\stype=\"application\/atom\+xml\"\srel=\"alternate\"\stitle=\"Naslov\"\s\/>/
+        last_response.body.to_s.should \
+        match('<link href="feed.xml" type="application/atom\+xml" rel="alternate" title="Naslov')
       end
 
       context "clicky" do
@@ -94,8 +94,8 @@ describe "blurgh" do
 
       it "should have the atom feed link" do
         get '/let'
-        last_response.body.should =~ /<link\shref=\"feed.xml\"\
-\stype=\"application\/atom\+xml\"\srel=\"alternate\"\stitle=\"/
+        last_response.body.to_s.should \
+        match('<link href="feed.xml" type="application/atom\+xml" rel="alternate" title="Naslov')
       end
 
       it "should format the content" do

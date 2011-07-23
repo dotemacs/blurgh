@@ -77,7 +77,7 @@ helpers do
   end
 
   def feed
-    "<link href=\"feed.xml\" type=\"application/atom+xml\" rel=\"alternate\" title=\"<%= @title %>\" />"
+    "<link href=\"feed.xml\" type=\"application/atom+xml\" rel=\"alternate\" title=\"" + @title + "\" />"
   end
 
   def clicky(id)
@@ -109,7 +109,8 @@ get '/:post' do
   post_options = YAML.load(@config)
   blurgh_conf = Config.all
   @clicky_id = blurgh_conf['clicky']
-  @title = post_options['title']
+  @title = blurgh_conf['title']
+  @post_title = post_options['title']
   @date =  post_options['date']
   erb :post
 end
