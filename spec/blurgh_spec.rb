@@ -50,14 +50,14 @@ describe "blurgh" do
 \stype=\"application\/atom\+xml\"\srel=\"alternate\"\stitle=\"Naslov\"\s\/>/
       end
 
-
     end
 
     context "the post view" do
       it "should show post content" do
         get '/let'
-        article = File.readlines("spec/fixtures/let.md", "")[1]
-        last_response.body.should match(article)
+        article = File.readlines("spec/fixtures/let.md", "")
+        article.delete_at 0
+        last_response.body.should match(Maruku.new(article.join).to_html)
       end
 
       it "should show post title" do
@@ -76,6 +76,11 @@ describe "blurgh" do
         get '/let'
         last_response.body.should =~ /<link\shref=\"feed.xml\"\
 \stype=\"application\/atom\+xml\"\srel=\"alternate\"\stitle=\"/
+      end
+
+      it "should format the content" do
+        get '/let'
+        last_response.body.should match("<strong>this text should be bold</strong>")
       end
     end
 
@@ -173,6 +178,18 @@ describe "blurgh" do
 
     it "should return a post in two parts" do
       get_post("o-kapadokiji").should have(2).parts
+    end
+
+    describe "the first part" do
+      it "should contain the title and the date" do
+        get_post("o-kapadokiji").join.should match("title: Кападокија\ndate: 20110324")
+      end
+    end
+
+    describe "the second part" do
+      it "should contain the contents of the whole page" do
+        get_post("o-kapadokiji")[1].should  match('The second paragraph')
+      end
     end
 
   end

@@ -3,6 +3,7 @@
 require 'sinatra'
 require 'yaml'
 require 'builder'
+require 'maruku'
 
 module Config
   def self.title
@@ -53,7 +54,10 @@ end
 
 def get_post(post)
   begin
-    header, body = File.readlines(Config.options['store'] + "/" + post + ".md", "")
+    file = File.readlines(Config.options['store'] + "/" + post + ".md", "")
+    header = file[0]
+    file.delete_at(0)
+    return header, file.join
   rescue Errno::ENOENT
     not_found
   end
@@ -61,6 +65,12 @@ end
 
 not_found do
   "Nothing to see here"
+end
+
+helpers do
+  def parse(content)
+    Maruku.new(content).to_html
+  end
 end
 
 get '/feed.xml' do
