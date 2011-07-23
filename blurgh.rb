@@ -76,6 +76,10 @@ helpers do
     Maruku.new(content).to_html
   end
 
+  def feed
+    "<link href=\"feed.xml\" type=\"application/atom+xml\" rel=\"alternate\" title=\"<%= @title %>\" />"
+  end
+
   def clicky(id)
     "<script src=\"http://static.getclicky.com/js\" type=\"text/javascript\"></script>
      <script type=\"text/javascript\">clicky.init(" + id.to_s + ");</script>
