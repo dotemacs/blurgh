@@ -14,7 +14,8 @@ describe "blurgh" do
         .and_return({"title" => "Naslov",
                       "subtitle" => "Blurgh subtitle",
                       "store" => "spec/fixtures",
-                      "clicky" => "123456"})
+                      "clicky" => "123456",
+                      "google" => "GO-123-4"})
     end
 
     it "should respond to /" do
@@ -61,6 +62,19 @@ describe "blurgh" do
           last_response.body.should match('clicky.init\(123456\)')
         end
       end
+
+      context "google analytics" do
+        it "should have the google analytics javascript" do
+          get '/'
+          last_response.body.should match('.google-analytics.com/ga.js')
+        end
+
+        it "should have the google analytics account" do
+          get '/'
+          last_response.body.should match('GO-123-4')
+        end
+      end
+
     end
 
     context "the post view" do

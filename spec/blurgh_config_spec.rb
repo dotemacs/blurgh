@@ -51,7 +51,16 @@ describe "BlurghConfig" do
     it "should return value" do
       BlurghConfig.new.clicky.should be_an_instance_of(String)
     end
+  end
 
+  describe ".google" do
+    before(:each) do
+      YAML.should_receive(:load_file).with("setup.yaml").and_return({"google" => "GO-123-4"})
+    end
+
+    it "should return value" do
+      BlurghConfig.new.google.should match("GO-123-4")
+    end
   end
 
 end
