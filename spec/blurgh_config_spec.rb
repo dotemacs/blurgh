@@ -40,10 +40,18 @@ describe "BlurghConfig" do
   end
 
   describe ".clicky" do
+    before(:each) do
+      YAML.should_receive(:load_file).with("setup.yaml").and_return({"clicky" => 123456})
+    end
+
     it "should return value" do
-      YAML.should_receive(:load_file).with("setup.yaml").and_return({"clicky" => "123456"})
       BlurghConfig.new.clicky.should match("123456")
     end
+
+    it "should return value" do
+      BlurghConfig.new.clicky.should be_an_instance_of(String)
+    end
+
   end
 
 end

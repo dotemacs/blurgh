@@ -1,0 +1,8 @@
+= feed
+= clicky
+%script{:src => "http://static.getclicky.com/js", :type => "text/javascript"}
+%h1= @title
+%h3= @subtitle
+- @posts.each do |post|
+  %p
+    %a{:href => post[1]['url']}= post[1]['title']

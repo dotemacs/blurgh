@@ -23,7 +23,7 @@ class BlurghConfig
   end
 
   def clicky
-    @options['clicky']
+    @options['clicky'].to_s
   end
 end
 
@@ -74,8 +74,12 @@ helpers do
 
   def clicky
     "<script src=\"http://static.getclicky.com/js\" type=\"text/javascript\"></script>
-     <script type=\"text/javascript\">clicky.init(" + @clicky_id + ");</script>
-     <noscript><p><img alt=\"Clicky\" width=\"1\" height=\"1\" src=\"http://in.getclicky.com/" + @clicky_id + "ns.gif\" /></p></noscript>"
+<script type=\"text/javascript\">clicky.init(" + @clicky_id + ");</script>
+<noscript>
+<p>
+  <img alt=\"Clicky\" width=\"1\" height=\"1\" src=\"http://in.getclicky.com/" + @clicky_id + "ns.gif\" />
+</p>
+</noscript>"
   end
 end
 
@@ -93,7 +97,8 @@ get '/' do
   @title = blurgh.title
   @subtitle = blurgh.subtitle
   @posts = get_posts(blurgh.store)
-  erb :index
+  # erb :index
+  haml :index
 end
 
 get '/:post' do

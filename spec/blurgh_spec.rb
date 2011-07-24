@@ -41,8 +41,8 @@ describe "blurgh" do
 
       it "the posts titles should be shown" do
         get '/'
-        last_response.body.should match('<a href="let">Авионски лет</a>')
-        last_response.body.should match('<a href="o-kapadokiji">Кападокија</a>')
+        last_response.body.should match("<a href='let'>Авионски лет</a>")
+        last_response.body.should match("<a href='o-kapadokiji'>Кападокија</a>")
       end
 
       it "should have the atom feed link" do
