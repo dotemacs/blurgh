@@ -89,9 +89,7 @@ describe "blurgh" do
 
       it "should show post content" do
         get '/let'
-        article = File.readlines("spec/fixtures/let.md", "")
-        article.delete_at 0
-        last_response.body.should match(Maruku.new(article.join).to_html)
+        last_response.body.should match("<strong>this text should be bold</strong></p>")
       end
 
       it "should show post title" do

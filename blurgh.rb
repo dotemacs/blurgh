@@ -128,7 +128,8 @@ get '/:post' do
   @title = blurgh.title
   @post_title = post_options['title']
   @date =  post_options['date']
-  erb :post
+  # erb :post
+  haml :post
 end
 
 
