@@ -4,6 +4,7 @@
 
 %h1= @title
 %h3= @subtitle
-- @posts.each do |post|
+- @posts.each do |content|
+  - post = Post.new(content[1])
   %p
-    %a{:href => post[1]['url']}= post[1]['title']
+    %a{:href => post.url}= post.title

@@ -31,6 +31,19 @@ class BlurghConfig
   end
 end
 
+class Post
+  def initialize(post)
+    @post = post
+  end
+
+  def title
+    @post['title']
+  end
+
+  def url
+    @post['url']
+  end
+end
 
 def get_posts(store)
 
@@ -116,7 +129,6 @@ get '/' do
   @title = blurgh.title
   @subtitle = blurgh.subtitle
   @posts = get_posts(blurgh.store)
-  # erb :index
   haml :index
 end
 
@@ -128,7 +140,6 @@ get '/:post' do
   @title = blurgh.title
   @post_title = post_options['title']
   @date =  post_options['date']
-  # erb :post
   haml :post
 end
 
