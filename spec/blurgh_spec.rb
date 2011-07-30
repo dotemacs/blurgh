@@ -94,13 +94,11 @@ describe "blurgh" do
 
       it "should show post title" do
         get '/let'
-        config = File.readlines("spec/fixtures/let.md", "")[0]
         last_response.body.should match("Авионски лет")
       end
 
       it "should show post date" do
         get '/let'
-        config = File.readlines("spec/fixtures/let.md", "")[0]
         last_response.body.should match("20110325")
       end
 
@@ -115,11 +113,22 @@ describe "blurgh" do
         last_response.body.should match("<strong>this text should be bold</strong>")
       end
 
+      it "should have highlighted snippet" do
+        get '/code'
+        last_response.body.to_s.should match("<pre lang=\"elisp\"><code>")
+      end
+
+      it "should have real line breaks" do
+        get '/code'
+        last_response.body.to_s.should match("line<br>\n\s+break")
+      end
+
       context "clicky" do
         it "should have the clicky javascript link" do
           get '/let'
           last_response.body.should match('<script src=\"http://static.getclicky.com/js\" type=\"text/javascript\"></script>')
         end
+
         it "should have the clicky id" do
           get '/let'
           last_response.body.should match('clicky.init\(123456\)')
@@ -127,6 +136,7 @@ describe "blurgh" do
       end
 
     end
+
 
     describe "feed.xml" do
       it "should respond to /feed.xml" do
@@ -212,7 +222,8 @@ describe "blurgh" do
       store = BlurghConfig.new.store
 
       get_posts(store).should == \
-      [[20110325,  {"url" => "let", "title" => "Авионски лет", "body" => "#{second_article}"}],\
+      [[20110730, {"url"=>"code", "title"=>"Code", "body"=>"Some code snippets:\n\n"}],
+       [20110325,  {"url" => "let", "title" => "Авионски лет", "body" => "#{second_article}"}],\
        [20110324, {"url" => "o-kapadokiji", "title" => "Кападокија", "body" => "#{first_article}"}]]
     end
 

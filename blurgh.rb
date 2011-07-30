@@ -82,7 +82,7 @@ end
 
 helpers do
   def parse(content)
-    Redcarpet.new(content).to_html
+    Redcarpet.new(content, :fenced_code, :gh_blockcode, :hard_wrap).to_html
   end
 
   def feed
