@@ -3,7 +3,7 @@
 require 'sinatra'
 require 'yaml'
 require 'builder'
-require 'maruku'
+require 'redcarpet'
 
 class BlurghConfig
   def initialize
@@ -82,7 +82,7 @@ end
 
 helpers do
   def parse(content)
-    Maruku.new(content).to_html
+    Redcarpet.new(content).to_html
   end
 
   def feed
