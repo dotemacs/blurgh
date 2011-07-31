@@ -56,6 +56,13 @@ describe "blurgh" do
         last_response.body.should =~ /\d+\sday(s)?\sago/
       end
 
+      it "the posts contents should be shown" do
+        article = File.readlines("spec/fixtures/code.md", "")[1].to_s
+        article.gsub!("\n", "") # ignore the newlines
+        get '/'
+        last_response.body.should match(article)
+      end
+
       it "should have the atom feed link" do
         get '/'
         last_response.body.to_s.should \

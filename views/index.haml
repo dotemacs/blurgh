@@ -9,4 +9,5 @@
     %a{:href => post.url}= post.title
     .date
       = days_ago(post.date)
-
+    .content
+      = parse(post.body)
