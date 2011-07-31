@@ -1,8 +1,8 @@
 = feed
 = clicky
 %h2
-  = @post_title
+  = @post.title
 .date
-  = days_ago(@date)
+  = days_ago(@post.date)
 .post
-  = parse @content
+  = @content

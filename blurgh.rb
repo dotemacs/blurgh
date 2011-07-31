@@ -75,17 +75,6 @@ def get_posts(store)
 
 end
 
-def get_post(post)
-  begin
-    file = File.readlines(BlurghConfig.new.store + "/" + post + ".md", "")
-    header = file[0]
-    file.delete_at(0)
-    return header, file.join
-  rescue Errno::ENOENT
-    not_found
-  end
-end
-
 not_found do
   "Nothing to see here"
 end
@@ -167,14 +156,17 @@ get '/' do
 end
 
 get '/:post' do
-  @config, @content = get_post(params[:post])
-  post_options = YAML.load(@config)
-  blurgh = BlurghConfig.new
-  @clicky_id = blurgh.clicky
-  @title = blurgh.title
-  @post_title = post_options['title']
-  @date =  post_options['date']
-  haml :post
+  begin
+    blurgh = BlurghConfig.new
+    @post = Post.new(blurgh.store + "/" + params[:post] + ".md")
+    @clicky_id = blurgh.clicky
+    @title = blurgh.title
+    @content = parse(@post.body)
+    haml :post
+  rescue Errno::ENOENT
+    not_found
+  end
+
 end
 
 

@@ -88,14 +88,6 @@ describe "blurgh" do
     end
 
     context "the post view" do
-      before :each do
-        YAML.should_receive(:load_file)\
-          .and_return({"title" => "Naslov",
-                        "subtitle" => "Blurgh subtitle",
-                        "store" => "spec/fixtures",
-                        "clicky" => "123456"})
-      end
-
 
       it "should have a title tag" do
         get '/let'
@@ -240,26 +232,6 @@ describe "blurgh" do
       @posts = get_posts(store)
       @posts.first.body.should == youngest_article
       @posts.last.body.should == oldest_article
-    end
-
-  end
-
-  describe "get_post" do
-
-    it "should return a post in two parts" do
-      get_post("o-kapadokiji").should have(2).parts
-    end
-
-    describe "the first part" do
-      it "should contain the title and the date" do
-        get_post("o-kapadokiji").join.should match("title: Кападокија\ndate: 20110324")
-      end
-    end
-
-    describe "the second part" do
-      it "should contain the contents of the whole page" do
-        get_post("o-kapadokiji")[1].should  match('The second paragraph')
-      end
     end
 
   end
