@@ -202,9 +202,21 @@ describe "blurgh" do
           last_response.body.to_s.should match("<link>")
         end
 
+        xit "should have a domain name in the link field" do
+          get '/feed.xml'
+          domain = "one"
+          last_response.body.to_s.should match("<id>http://" + domain + article_link)
+        end
+
         it "should have a id" do
           get '/feed.xml'
           last_response.body.to_s.should match("<id>")
+        end
+
+        xit "should have the domain in the id field" do
+          get '/feed.xml'
+          domain = "one"
+          last_response.body.to_s.should match("<id>http://" + domain + article_link)
         end
 
         it "should have a published time" do

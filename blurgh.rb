@@ -13,6 +13,10 @@ class BlurghConfig
     @options = YAML.load_file("setup.yaml")
   end
 
+  def domain
+    @options['domain']
+  end
+
   def title
     @options['title']
   end

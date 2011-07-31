@@ -2,6 +2,15 @@ require 'spec_helper'
 
 describe "BlurghConfig" do
 
+  describe ".domain" do
+    it "should return domain name" do
+      domain = "example.com"
+      YAML.should_receive(:load_file).with("setup.yaml").and_return({"domain" => domain})
+      BlurghConfig.new.domain.should match(domain)
+    end
+  end
+
+
   describe ".title" do
     it "should return value" do
       YAML.should_receive(:load_file).with("setup.yaml").and_return({"title" => "Naslov"})
