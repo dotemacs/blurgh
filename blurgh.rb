@@ -143,6 +143,7 @@ end
 
 get '/feed.xml' do
   blurgh = BlurghConfig.new
+  @domain = blurgh.domain
   @title = blurgh.title
   @subtitle = blurgh.subtitle
   @posts = get_posts(blurgh.store)

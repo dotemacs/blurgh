@@ -11,7 +11,8 @@ describe "blurgh" do
 
     before :each do
       YAML.should_receive(:load_file)\
-        .and_return({"title" => "Naslov",
+        .and_return({ "domain" => "example.com",
+                      "title" => "Naslov",
                       "subtitle" => "Blurgh subtitle",
                       "store" => "spec/fixtures",
                       "clicky" => "123456",
@@ -197,26 +198,16 @@ describe "blurgh" do
           last_response.body.to_s.should =~ /<entry>\n\s+<title>/
         end
 
-        it "should have a link" do
+        it "should have a domain name in the link field" do
           get '/feed.xml'
-          last_response.body.to_s.should match("<link>")
+          link = "<link>http://example.com/let</link>"
+          last_response.body.should match(link)
         end
 
-        xit "should have a domain name in the link field" do
+        it "should have the domain in the id field" do
           get '/feed.xml'
-          domain = "one"
-          last_response.body.to_s.should match("<id>http://" + domain + article_link)
-        end
-
-        it "should have a id" do
-          get '/feed.xml'
-          last_response.body.to_s.should match("<id>")
-        end
-
-        xit "should have the domain in the id field" do
-          get '/feed.xml'
-          domain = "one"
-          last_response.body.to_s.should match("<id>http://" + domain + article_link)
+          id = "<id>http://example.com/let</id>"
+          last_response.body.to_s.should match(id)
         end
 
         it "should have a published time" do

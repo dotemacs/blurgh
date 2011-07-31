@@ -5,8 +5,8 @@ xml.feed :xmlns => 'http://www.w3.org/2005/Atom' do
   @posts.each do |post|
     xml.entry do
       xml.title post.title
-      xml.link post.url
-      xml.id post.url # TODO: add the proper ID along with the domain
+      xml.link "http://#{@domain}/#{post.url}"
+      xml.id "http://#{@domain}/#{post.url}" # TODO: add the proper ID along with the domain
       xml.updated post.date
       xml.body post.body
     end
