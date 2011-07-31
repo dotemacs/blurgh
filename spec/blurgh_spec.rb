@@ -115,7 +115,7 @@ describe "blurgh" do
 
       it "should have highlighted snippet" do
         get '/code'
-        last_response.body.to_s.should match("<pre lang=\"elisp\"><code>")
+        last_response.body.to_s.should match("<pre><span class=\"nb\">puts</span>")
       end
 
       it "should have real line breaks" do

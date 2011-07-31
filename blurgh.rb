@@ -4,6 +4,8 @@ require 'sinatra'
 require 'yaml'
 require 'builder'
 require 'redcarpet'
+require 'nokogiri'
+require 'albino'
 
 class BlurghConfig
   def initialize
@@ -82,7 +84,18 @@ end
 
 helpers do
   def parse(content)
-    Redcarpet.new(content, :fenced_code, :gh_blockcode, :hard_wrap).to_html
+    syntax_highlighter(Redcarpet.new( content,
+                                      :fenced_code,
+                                      :gh_blockcode,
+                                      :hard_wrap ).to_html )
+  end
+
+  def syntax_highlighter(html)
+    doc = Nokogiri::HTML(html)
+    doc.search("//pre[@lang]").each do |pre|
+      pre.replace Albino.colorize(pre.text.rstrip, pre[:lang])
+    end
+    doc.to_s
   end
 
   def feed

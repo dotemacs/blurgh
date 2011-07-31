@@ -8,7 +8,7 @@ Some code snippets:
 puts "this is ruby code"
 ```
 
-```elisp
+```common-lisp
 (message "this is elisp code")
 ```
 
