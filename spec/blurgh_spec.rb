@@ -25,6 +25,11 @@ describe "blurgh" do
 
     context "the index view" do
 
+      it "should have a title tag" do
+        get '/'
+        last_response.body.should match("<title>")
+      end
+
       it "should have a title" do
         get '/'
         last_response.body.should match("Naslov")
@@ -86,6 +91,11 @@ describe "blurgh" do
                         "clicky" => "123456"})
       end
 
+
+      it "should have a title tag" do
+        get '/let'
+        last_response.body.should match("<title>")
+      end
 
       it "should show post content" do
         get '/let'

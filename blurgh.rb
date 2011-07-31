@@ -98,6 +98,10 @@ helpers do
     doc.to_s
   end
 
+  def title
+    @title
+  end
+
   def feed
     "<link href=\"feed.xml\" type=\"application/atom+xml\" rel=\"alternate\" title=\"" + @title + "\" />"
   end
