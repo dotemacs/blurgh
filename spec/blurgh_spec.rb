@@ -232,14 +232,14 @@ describe "blurgh" do
   describe "get_posts" do
 
     it "should return posts" do
-      first_article = File.readlines("spec/fixtures/o-kapadokiji.md", "")[1]
-      second_article = File.readlines("spec/fixtures/let.md", "")[1]
+      oldest_article = File.readlines("spec/fixtures/o-kapadokiji.md", "").drop(1).join
+      second_article = File.readlines("spec/fixtures/let.md", "").drop(1).join
+      youngest_article = File.readlines("spec/fixtures/code.md", "").drop(1).join
       store = BlurghConfig.new.store
 
-      get_posts(store).should == \
-      [[20110730, {"url"=>"code", "title"=>"Code", "body"=>"Some code snippets:\n\n"}],
-       [20110325,  {"url" => "let", "title" => "Авионски лет", "body" => "#{second_article}"}],\
-       [20110324, {"url" => "o-kapadokiji", "title" => "Кападокија", "body" => "#{first_article}"}]]
+      @posts = get_posts(store)
+      @posts.first.body.should == youngest_article
+      @posts.last.body.should == oldest_article
     end
 
   end

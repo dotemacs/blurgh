@@ -2,26 +2,34 @@ require 'spec_helper'
 
 describe "Post" do
 
-  post = [20110730, { "url"=>"code", "title"=>"Post title" }]
+  post = "spec/fixtures/code.md"
 
   it { Post.new(post).should be_instance_of(Post) }
 
   describe ".title" do
     it "should return title" do
-      Post.new(post).title.should match(post[1]["title"])
+      Post.new(post).title.should match("Code")
     end
   end
 
   describe ".url" do
     it "should return url" do
-      Post.new(post).url.should match(post[1]["url"])
+      Post.new(post).url.should match("code")
     end
   end
 
   describe ".date" do
     it "should return date" do
-      Post.new(post).date.to_s.should match(post[0].to_s)
+      Post.new(post).date.to_s.should match("20110730")
     end
   end
+
+  describe ".body" do
+    it "should return the body of the post" do
+      body = 'Some code snippets:\n\n```ruby\nputs \"this is ruby code\"\n```'
+      Post.new(post).body.to_s.should match(body)
+    end
+  end
+
 
 end

@@ -35,40 +35,43 @@ class BlurghConfig
 end
 
 class Post
-  def initialize(post)
-    @post = post
+  def initialize(file_path)
+    @file = file_path
+    @contents = File.readlines(@file, "")
+    @data = YAML.load(@contents[0])
   end
 
   def title
-    @post[1]["title"]
+    @data['title']
   end
 
   def url
-    @post[1]['url']
+    @file.split("/").last.gsub(".md", "")
   end
 
   def date
-    @post[0]
+    @data['date']
   end
+
+  def body
+    @contents.drop(1).join
+  end
+
 end
 
 def get_posts(store)
 
-  all_posts = Hash.new {
-    |h,k| h[k] = Hash.new(&h.default_proc)
-  }
-
+  all_posts = Array.new
   post_dir = File.join(store + "/" + "*.md")
+  count = 0
 
-  Dir.glob(post_dir).each do |post|
-    header, body = File.readlines(post, "")
-    data = YAML.load(header)
-    all_posts[data['date']]['url']   = post.gsub("\.md", "").gsub(store + "/", "")
-    all_posts[data['date']]['title'] = data['title']
-    all_posts[data['date']]['body']  = body
+  Dir.glob(post_dir).each do |file|
+    @post = Post.new(file)
+    all_posts[count] = @post
+    count += 1
   end
 
-  all_posts.sort.reverse
+  all_posts.sort{|a,b| a.date <=> b.date}.reverse
 
 end
 
