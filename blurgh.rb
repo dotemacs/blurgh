@@ -40,11 +40,15 @@ class Post
   end
 
   def title
-    @post['title']
+    @post[1]["title"]
   end
 
   def url
-    @post['url']
+    @post[1]['url']
+  end
+
+  def date
+    @post[0]
   end
 end
 

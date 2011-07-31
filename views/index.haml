@@ -5,6 +5,9 @@
 %h1= @title
 %h3= @subtitle
 - @posts.each do |content|
-  - post = Post.new(content[1])
+  - post = Post.new(content)
   %p
     %a{:href => post.url}= post.title
+    .date
+      = days_ago(post.date)
+

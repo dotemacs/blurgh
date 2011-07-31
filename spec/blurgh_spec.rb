@@ -51,6 +51,11 @@ describe "blurgh" do
         last_response.body.should match("<a href='o-kapadokiji'>Кападокија</a>")
       end
 
+      it "the posts dates should be shown" do
+        get '/'
+        last_response.body.should =~ /\d+\sday(s)?\sago/
+      end
+
       it "should have the atom feed link" do
         get '/'
         last_response.body.to_s.should \
