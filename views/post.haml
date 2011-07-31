@@ -2,6 +2,7 @@
 = clicky
 %h2
   = @post_title
-%div
-  = @date
-= parse @content
+.date
+  = days_ago(@date)
+.post
+  = parse @content

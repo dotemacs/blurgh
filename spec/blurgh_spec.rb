@@ -109,7 +109,7 @@ describe "blurgh" do
 
       it "should show post date" do
         get '/let'
-        last_response.body.should match("20110325")
+        last_response.body.should =~ /\d+\sday(s)?\sago/
       end
 
       it "should have the atom feed link" do

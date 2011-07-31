@@ -6,6 +6,7 @@ require 'builder'
 require 'redcarpet'
 require 'nokogiri'
 require 'albino'
+require 'time'
 
 class BlurghConfig
   def initialize
@@ -101,6 +102,15 @@ helpers do
   def title
     @title
   end
+
+  def days_ago(num)
+    digits = num.to_s
+    article_age = DateTime.new(digits[0..3].to_i, digits[4..5].to_i, digits[6..7].to_i)
+    now = DateTime.now
+    days = (now - article_age).to_i #+ 1
+    days < 2 ? "#{days} day ago" : "#{days} days ago"
+  end
+
 
   def feed
     "<link href=\"feed.xml\" type=\"application/atom+xml\" rel=\"alternate\" title=\"" + @title + "\" />"
