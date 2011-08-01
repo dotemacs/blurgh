@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'sinatra', '1.2.1'
+gem 'sinatra', '1.2.6'
 gem 'rack-test', '0.5.7'
 gem 'rspec', '2.5.0'
 gem 'rake', '0.8.7'
@@ -9,4 +9,5 @@ gem 'builder', '2.1.2'
 gem 'redcarpet', '1.17.2'
 gem 'nokogiri', '1.5.0'
 gem 'albino', '1.3.3'
+gem 'pygments.rb', '0.1.2'
 gem 'haml', '3.1.2'

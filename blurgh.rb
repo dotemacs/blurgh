@@ -5,7 +5,7 @@ require 'yaml'
 require 'builder'
 require 'redcarpet'
 require 'nokogiri'
-require 'albino'
+require 'pygments.rb'
 require 'time'
 
 class BlurghConfig
@@ -94,7 +94,7 @@ helpers do
   def syntax_highlighter(html)
     doc = Nokogiri::HTML(html)
     doc.search("//pre[@lang]").each do |pre|
-      pre.replace Albino.colorize(pre.text.rstrip, pre[:lang])
+      pre.replace Pygments.highlight(pre.text.rstrip, :lexer => pre[:lang])
     end
     doc.to_s
   end
