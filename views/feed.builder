@@ -6,9 +6,9 @@ xml.feed :xmlns => 'http://www.w3.org/2005/Atom' do
     xml.entry do
       xml.title post.title
       xml.link "http://#{@domain}/#{post.url}"
-      xml.id "http://#{@domain}/#{post.url}" 
+      xml.id "http://#{@domain}/#{post.url}"
       xml.updated post.date
-      xml.body parse(post.body)
+      xml.content parse(post.body), :type => "html"
     end
   end
 end

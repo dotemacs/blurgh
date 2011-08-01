@@ -220,9 +220,10 @@ describe "blurgh" do
           last_response.body.to_s.should match("<updated>")
         end
 
-        it "should have post body" do
+        it "should have post contents" do
           get '/feed.xml'
-          last_response.body.to_s.should match("<body>")
+          paragraph = "&lt;p&gt;Some code snippets:&lt;/p&gt;"
+          last_response.body.to_s.should match(paragraph)
         end
       end
 
