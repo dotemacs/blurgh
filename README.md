@@ -9,9 +9,10 @@ Originally started as a tutorial for http://ruby.rs
 ### Usage
 
 ```
-$ bundle 
+$ git clone git@github.com:dotemacs/blurgh.git
 $ cd blurgh
-$ $EDITOR **setup.yaml** # edit the settings
+$ bundle 
+$ $EDITOR setup.yaml
 $ $EDITOR posts/your-post.md  # add a post
 $ shotgun blurgh.rb
 ```
