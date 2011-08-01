@@ -2,8 +2,7 @@
 
 Simple blog in sinatra with Github style syntax highlighting
 
-Originally started as a tutorial for http://ruby.rs
-
+Posts are stored as Markdown files
 
 
 ### Usage
@@ -17,11 +16,13 @@ $ $EDITOR posts/your-post.md  # add a post
 $ shotgun blurgh.rb
 ```
 
-Make sure that you have python's pygments installed, albino gem uses
-that to parse the code block
+Make sure that you have python's pygments installed, **pygments.rb**
+gem uses it to parse and highlight the code
 
 
 ### Note
+
+Helpers for Google analytics and Clicky 
 
 Posts use **.md** extensions
 
@@ -31,3 +32,5 @@ Blurgh URL's are in format of:
    http://domain/yyyy/mm/dd/file-name  
 
 **syntax_highlight** method taken from Lee Jarvis via Ryan Bates
+
+Originally started as a tutorial for http://ruby.rs
