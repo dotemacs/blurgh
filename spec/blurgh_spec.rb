@@ -97,6 +97,11 @@ describe "blurgh" do
 
     context "the post view" do
 
+      it "should have the domain name linking back to home" do
+        get '/let'
+        last_response.body.should match("<a href='/'>")
+      end
+
       it "should have a title tag" do
         get '/let'
         last_response.body.should match("<title>")

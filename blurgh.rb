@@ -166,6 +166,7 @@ get '/:post' do
     @post = Post.new(blurgh.store + "/" + params[:post] + ".md")
     @clicky_id = blurgh.clicky
     @title = blurgh.title
+    @domain = "http://" + blurgh.domain
     @content = parse(@post.body)
     haml :post
   rescue Errno::ENOENT
