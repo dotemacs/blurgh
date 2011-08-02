@@ -96,7 +96,8 @@ helpers do
     doc.search("//pre[@lang]").each do |pre|
       pre.replace Pygments.highlight(pre.text.rstrip, :lexer => pre[:lang])
     end
-    doc.to_s
+    # '\n' is REQUIRED for correct formatting
+    doc.to_s.gsub("<pre>", "<pre>\n")
   end
 
   def title
