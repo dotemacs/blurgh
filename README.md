@@ -10,6 +10,7 @@ Posts are stored as Markdown files
 ```
 $ git clone git@github.com:dotemacs/blurgh.git
 $ cd blurgh
+$ git checkout -b mine
 $ bundle 
 $ $EDITOR setup.yaml
 $ $EDITOR posts/your-post.md  # add a post
@@ -31,6 +32,7 @@ Blurgh URL's are in format of:
   and not 
    http://domain/yyyy/mm/dd/file-name  
 
-**syntax_highlight** method taken from Lee Jarvis via Ryan Bates
+**syntax_highlight** method taken from Lee Jarvis via Ryan Bates, but 
+modified as it uses **pygments.rb** (which has issue on FreeBSD)
 
 Originally started as a tutorial for http://ruby.rs
