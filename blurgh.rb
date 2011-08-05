@@ -167,6 +167,7 @@ get '/:post' do
     @post = Post.new(blurgh.store + "/" + params[:post] + ".md")
     @clicky_id = blurgh.clicky
     @title = blurgh.title
+    @subtitle = blurgh.subtitle
     @domain = "http://" + blurgh.domain
     @content = parse(@post.body)
     haml :post

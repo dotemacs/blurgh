@@ -107,6 +107,11 @@ describe "blurgh" do
         last_response.body.should match("<title>")
       end
 
+      it "should have a subtitle" do
+        get '/'
+        last_response.body.should match("Blurgh subtitle")
+      end
+
       it "should show post content" do
         get '/let'
         last_response.body.should match("<strong>this text should be bold</strong></p>")
