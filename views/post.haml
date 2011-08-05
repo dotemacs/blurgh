@@ -1,12 +1,17 @@
 = feed
 = clicky
 
-%h1
-  %a{:href => '/'}= @title
+.title
+  %h1
+    %a{:href => '/'}= @title
+  %sub
+    = @subtitle
 
-%h3
-  = @post.title
-.date
-  = days_ago(@post.date)
-.post
-  = @content
+.box
+  .posttitle
+    = @post.title
+  .date
+    = days_ago(@post.date)
+  .post
+    = parse(@post.body)
+

@@ -1,0 +1,38 @@
+h1, h2, h3, a {
+   text-decoration: none;
+}
+h1 a:visited {
+   text-decoration: none;
+}
+.post {
+    padding-top: 40px;
+    padding-bottom: 50px;
+}
+.title {
+    /* text-align: center; */
+    /* padding-left: 20px; */
+    font-size: 150%;
+    margin-left:20px;
+}
+.posttitle {
+    font-size: 150%;
+}
+
+.date {
+    font-style: italic;
+}
+.box {
+    /* text-align: left;  */
+    font-family: sans-serif; 
+    font-size: medium;
+    line-height: 175%;
+    /* width: 700px; */
+    /* margin-top:20px;margin-left:auto;margin-right:auto; text-align:left; width: 700px; */
+    margin-top:50px; text-align:left; width: 900px; margin-left:20px;
+}
+
+pre {
+    line-height: 120%;
+    margin-left: -8%;
+    font-size: 110%;
+}
