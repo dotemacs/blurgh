@@ -2,9 +2,9 @@
 .title
 
   %h1
-    %a{:href => '/'}= @title
+    %a{:href => '/'}= @blurgh.title
   .subtitle 
-    = @subtitle
+    = @blurgh.subtitle
 
 - @posts.each do |post|
   .posttitle

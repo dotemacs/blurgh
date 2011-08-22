@@ -86,15 +86,15 @@ helpers do
 
 
   def feed
-    "<link href=\"feed.xml\" type=\"application/atom+xml\" rel=\"alternate\" title=\"" + @title + "\" />"
+    "<link href=\"feed.xml\" type=\"application/atom+xml\" rel=\"alternate\" title=\"" + @blurgh.title + "\" />"
   end
 
   def clicky
     "<script src=\"http://static.getclicky.com/js\" type=\"text/javascript\"></script>
-<script type=\"text/javascript\">clicky.init(" + @clicky_id + ");</script>
+<script type=\"text/javascript\">clicky.init(" + @blurgh.clicky + ");</script>
 <noscript>
 <p>
-  <img alt=\"Clicky\" width=\"1\" height=\"1\" src=\"http://in.getclicky.com/" + @clicky_id + "ns.gif\" />
+  <img alt=\"Clicky\" width=\"1\" height=\"1\" src=\"http://in.getclicky.com/" + @blurgh.clicky + "ns.gif\" />
 </p>
 </noscript>"
   end
@@ -102,7 +102,7 @@ helpers do
   def google
     "<script type=\"text/javascript\">
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', '" + @google + "']);
+      _gaq.push(['_setAccount', '" + @blurgh.google + "']);
       _gaq.push(['_trackPageview']);
        (function() {
         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -115,34 +115,21 @@ helpers do
 end
 
 get '/feed.xml' do
-  blurgh = BlurghConfig.new
-  @domain = blurgh.domain
-  @title = blurgh.title
-  @subtitle = blurgh.subtitle
-  @posts = get_posts(blurgh.store)
+  @blurgh = BlurghConfig.new
+  @posts = get_posts(@blurgh.store)
   builder :feed
 end
 
 get '/' do
-  blurgh = BlurghConfig.new
-  @clicky_id = blurgh.clicky
-  @google = blurgh.google
-  @title = blurgh.title
-  @subtitle = blurgh.subtitle
-  @posts = get_posts(blurgh.store)
+  @blurgh = BlurghConfig.new
+  @posts = get_posts(@blurgh.store)
   haml :index
 end
 
 get '/:post' do
   begin
-    blurgh = BlurghConfig.new
-    @post = Post.new(blurgh.store + "/" + params[:post] + ".md")
-    @clicky_id = blurgh.clicky
-    @title = blurgh.title
-    @subtitle = blurgh.subtitle
-    @google = blurgh.google
-    @domain = "http://" + blurgh.domain
-    @content = parse(@post.body)
+    @blurgh = BlurghConfig.new
+    @post = Post.new(@blurgh.store + "/" + params[:post] + ".md")
     haml :post
   rescue Errno::ENOENT
     not_found
