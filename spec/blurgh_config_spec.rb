@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "BlurghConfig" do
 
-  describe ".domain" do
+  describe "#domain" do
     it "should return domain name" do
       domain = "example.com"
       YAML.should_receive(:load_file).with("setup.yaml")
@@ -12,7 +12,7 @@ describe "BlurghConfig" do
   end
 
 
-  describe ".title" do
+  describe "#title" do
     it "should return value" do
       YAML.should_receive(:load_file).with("setup.yaml").and_return({"title" => "Naslov"})
       BlurghConfig.new.title.should match("Naslov")
@@ -34,7 +34,7 @@ describe "BlurghConfig" do
     end
   end
 
-  describe ".subtitle" do
+  describe "#subtitle" do
     it "should return value" do
       YAML.should_receive(:load_file).with("setup.yaml").and_return({"subtitle" => "Blurgh blog"})
       BlurghConfig.new.subtitle.should match("Blurgh blog")
@@ -42,14 +42,14 @@ describe "BlurghConfig" do
   end
 
 
-  describe ".store" do
+  describe "#store" do
     it "should return value" do
       YAML.should_receive(:load_file).with("setup.yaml").and_return({"store" => "posts"})
       BlurghConfig.new.store.should match("posts")
     end
   end
 
-  describe ".clicky" do
+  describe "#clicky" do
     before(:each) do
       YAML.should_receive(:load_file).with("setup.yaml").and_return({"clicky" => 123456})
     end
@@ -63,7 +63,7 @@ describe "BlurghConfig" do
     end
   end
 
-  describe ".google" do
+  describe "#google" do
     before(:each) do
       YAML.should_receive(:load_file).with("setup.yaml").and_return({"google" => "GO-123-4"})
     end
