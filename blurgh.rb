@@ -9,32 +9,16 @@ require 'pygments.rb'
 require 'time'
 
 class BlurghConfig
+  attr_reader :domain, :title, :subtitle, :store, :clicky, :google
+
   def initialize
-    @options = YAML.load_file("setup.yaml")
-  end
-
-  def domain
-    @options['domain']
-  end
-
-  def title
-    @options['title']
-  end
-
-  def subtitle
-    @options['subtitle']
-  end
-
-  def store
-    @options['store']
-  end
-
-  def clicky
-    @options['clicky'].to_s
-  end
-
-  def google
-    @options['google']
+    options = YAML.load_file("setup.yaml")
+    @domain = options['domain']
+    @title = options['title']
+    @subtitle = options['subtitle']
+    @store = options['store']
+    @clicky = options['clicky'].to_s
+    @google = options['google']
   end
 end
 
