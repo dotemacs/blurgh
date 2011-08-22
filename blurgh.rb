@@ -23,28 +23,16 @@ class BlurghConfig
 end
 
 class Post
+  attr_reader :title, :date, :url, :body
+
   def initialize(file_path)
-    @file = file_path
-    @contents = File.readlines(@file, "")
-    @data = YAML.load(@contents[0])
+    contents = File.readlines(file_path, "")
+    data = YAML.load(contents[0])
+    @title = data['title']
+    @date = data['date']
+    @url = file_path.split("/").last.gsub(".md", "")
+    @body = contents.drop(1).join
   end
-
-  def title
-    @data['title']
-  end
-
-  def url
-    @file.split("/").last.gsub(".md", "")
-  end
-
-  def date
-    @data['date']
-  end
-
-  def body
-    @contents.drop(1).join
-  end
-
 end
 
 def get_posts(store)
