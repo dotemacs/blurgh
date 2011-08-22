@@ -47,7 +47,7 @@ def get_posts(store)
     count += 1
   end
 
-  all_posts.sort{|a,b| a.date <=> b.date}.reverse
+  all_posts.sort{|a,b| b.date <=> a.date}
 
 end
 
