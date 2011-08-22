@@ -168,6 +168,7 @@ get '/:post' do
     @clicky_id = blurgh.clicky
     @title = blurgh.title
     @subtitle = blurgh.subtitle
+    @google = blurgh.google
     @domain = "http://" + blurgh.domain
     @content = parse(@post.body)
     haml :post

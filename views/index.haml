@@ -1,18 +1,14 @@
-= feed
-= clicky
-= google
 
 .title
+
   %h1
-    = @title
-  %sub
+    %a{:href => '/'}= @title
+  .subtitle 
     = @subtitle
 
-.box
-  - @posts.each do |post|
-    .posttitle
-      %a{:href => post.url}= post.title
-    .date
-      = days_ago(post.date)
-    .post
-      = parse(post.body)
+- @posts.each do |post|
+  .posttitle
+    %a{:href => post.url}= post.title
+  .date
+    = days_ago(post.date)
+  = parse(post.body)
