@@ -26,14 +26,9 @@ describe "blurgh" do
 
     context "the index view" do
 
-      it "should have a title tag" do
+      it "should have a title tag and title" do
         get '/'
-        last_response.body.should match("<title>")
-      end
-
-      it "should have a title" do
-        get '/'
-        last_response.body.should match("Naslov")
+        last_response.body.should match("<title>\n\s+Naslov")
       end
 
       it "should have a subtitle" do
