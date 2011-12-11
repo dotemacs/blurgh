@@ -2,12 +2,11 @@
 .title
   %h1
     %a{:href => '/'}= @blurgh.title
-  .subtitle 
+  .subtitle
     = @blurgh.subtitle
 
-.posttitle 
+.posttitle
   = @post.title
 .date
   = days_ago(@post.date)
 =parse(@post.body)
-

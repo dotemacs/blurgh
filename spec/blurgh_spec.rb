@@ -43,7 +43,7 @@ describe "blurgh" do
 
       it "the posts titles should be shown" do
         get '/'
-        last_response.body.should match("<a href='let'>Авионски лет</a>")
+        last_response.body.should match("<a href='flight'>Plane flight</a>")
         last_response.body.should match("<a href='o-kapadokiji'>Кападокија</a>")
       end
 
@@ -93,12 +93,12 @@ describe "blurgh" do
     context "the post view" do
 
       it "should have the domain name linking back to home" do
-        get '/let'
+        get '/flight'
         last_response.body.should match("<a href='/'>")
       end
 
       it "should have a title tag" do
-        get '/let'
+        get '/flight'
         last_response.body.should match("<title>")
       end
 
@@ -108,28 +108,28 @@ describe "blurgh" do
       end
 
       it "should show post content" do
-        get '/let'
+        get '/flight'
         last_response.body.should match("<strong>this text should be bold</strong></p>")
       end
 
       it "should show post title" do
-        get '/let'
-        last_response.body.should match("Авионски лет")
+        get '/flight'
+        last_response.body.should match("Plane flight")
       end
 
       it "should show post date" do
-        get '/let'
+        get '/flight'
         last_response.body.should =~ /\d+\sday(s)?\sago/
       end
 
       it "should have the atom feed link" do
-        get '/let'
+        get '/flight'
         last_response.body.to_s.should \
         match('<link href="feed.xml" type="application/atom\+xml" rel="alternate" title="Naslov')
       end
 
       it "should format the content" do
-        get '/let'
+        get '/flight'
         last_response.body.should match("<strong>this text should be bold</strong>")
       end
 
@@ -146,12 +146,12 @@ describe "blurgh" do
 
       context "clicky" do
         it "should have the clicky javascript link" do
-          get '/let'
+          get '/flight'
           last_response.body.should match('<script src=\"http://static.getclicky.com/js\" type=\"text/javascript\"></script>')
         end
 
         it "should have the clicky id" do
-          get '/let'
+          get '/flight'
           last_response.body.should match('clicky.init\(123456\)')
         end
       end
@@ -199,20 +199,20 @@ describe "blurgh" do
         end
 
         it "should have titles" do
-          article = File.readlines("spec/fixtures/let.md", "")[1]
+          article = File.readlines("spec/fixtures/flight.md", "")[1]
           get '/feed.xml'
           last_response.body.to_s.should =~ /<entry>\n\s+<title>/
         end
 
         it "should have a domain name in the link field" do
           get '/feed.xml'
-          link = "<link>http://example.com/let</link>"
+          link = "<link>http://example.com/flight</link>"
           last_response.body.should match(link)
         end
 
         it "should have the domain in the id field" do
           get '/feed.xml'
-          id = "<id>http://example.com/let</id>"
+          id = "<id>http://example.com/flight</id>"
           last_response.body.to_s.should match(id)
         end
 
@@ -242,7 +242,7 @@ describe "blurgh" do
 
     it "should return posts" do
       oldest_article = File.readlines("spec/fixtures/o-kapadokiji.md", "").drop(1).join
-      second_article = File.readlines("spec/fixtures/let.md", "").drop(1).join
+      second_article = File.readlines("spec/fixtures/flight.md", "").drop(1).join
       youngest_article = File.readlines("spec/fixtures/code.md", "").drop(1).join
       store = BlurghConfig.new.store
 
