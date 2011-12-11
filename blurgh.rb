@@ -9,10 +9,12 @@ require 'pygments.rb'
 require 'time'
 
 class BlurghConfig
-  attr_reader :domain, :title, :subtitle, :store, :clicky, :google
+  attr_reader :paginate, :domain, :title, :subtitle,
+              :store, :clicky, :google
 
   def initialize
     options = YAML.load_file("setup.yaml")
+    @paginate = options['paginate'].to_s
     @domain = options['domain']
     @title = options['title']
     @subtitle = options['subtitle']
@@ -35,7 +37,7 @@ class Post
   end
 end
 
-def get_posts(store)
+def get_posts(store, start=0, paginate=0)
 
   all_posts = Array.new
   post_dir = File.join(store + "/" + "*.md")
@@ -47,8 +49,13 @@ def get_posts(store)
     count += 1
   end
 
-  all_posts.sort{|a,b| b.date <=> a.date}
-
+  if start.to_i == 0
+    all_posts.sort{|a,b| b.date <=> a.date}[0..(paginate.to_i - 1)]
+  elsif (start.to_i != 0 and paginate.to_i != 0)
+    all_posts.sort{|a,b| b.date <=> a.date}[(start.to_i)..(paginate.to_i)]
+  else
+    all_posts.sort{|a,b| b.date <=> a.date}
+  end
 end
 
 not_found do
@@ -118,7 +125,7 @@ end
 
 get '/' do
   @blurgh = BlurghConfig.new
-  @posts = get_posts(@blurgh.store)
+  @posts = get_posts(@blurgh.store, 0, @blurgh.paginate)
   haml :index
 end
 
@@ -130,4 +137,10 @@ get '/:post' do
   rescue Errno::ENOENT
     not_found
   end
+end
+
+get '/page/:number' do
+  @blurgh = BlurghConfig.new
+  @posts = get_posts(@blurgh.store, params[:number], params[:number])
+  haml :page
 end

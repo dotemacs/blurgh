@@ -49,6 +49,13 @@ describe "BlurghConfig" do
     end
   end
 
+  describe "#paginate" do
+    it "should return value" do
+      YAML.should_receive(:load_file).with("setup.yaml").and_return({"paginate" => "2"})
+      BlurghConfig.new.paginate.should match("2")
+    end
+  end
+
   describe "#clicky" do
     before(:each) do
       YAML.should_receive(:load_file).with("setup.yaml").and_return({"clicky" => 123456})
@@ -74,4 +81,3 @@ describe "BlurghConfig" do
   end
 
 end
-

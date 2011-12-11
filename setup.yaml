@@ -2,5 +2,6 @@ domain: example.com
 title: Пази сад
 subtitle: Blurgh subtitle
 store: spec/fixtures
+paginate: 2
 clicky: 654321
 google: GO-123-4

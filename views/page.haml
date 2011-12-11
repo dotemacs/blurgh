@@ -13,5 +13,9 @@
     = days_ago(post.date)
   = parse(post.body)
 
+  - if @blurgh.paginate == "2"
+    %a{:href => '/'} Previous
+  - else
+    %a{:href => (@blurgh.paginate.to_i - 1)} Previous
 
-%a{:href => "page/" + @blurgh.paginate  } Next
+  %a{:href => (@blurgh.paginate.to_i + 1)} Next

@@ -11,12 +11,13 @@ describe "blurgh" do
 
     before :each do
       YAML.should_receive(:load_file)\
-        .and_return({ "domain" => "example.com",
-                      "title" => "Naslov",
+        .and_return({ "domain"   => "example.com",
+                      "title"    => "Naslov",
                       "subtitle" => "Blurgh subtitle",
-                      "store" => "spec/fixtures",
-                      "clicky" => "123456",
-                      "google" => "GO-123-4"})
+                      "store"    => "spec/fixtures",
+                      "paginate" => "2",
+                      "clicky"   => "123456",
+                      "google"   => "GO-123-4"})
     end
 
     it "should respond to /" do
@@ -43,8 +44,7 @@ describe "blurgh" do
 
       it "the posts titles should be shown" do
         get '/'
-        last_response.body.should match("<a href='flight'>Plane flight</a>")
-        last_response.body.should match("<a href='o-kapadokiji'>Кападокија</a>")
+        last_response.body.should match "<div class='posttitle'>"
       end
 
       it "the posts dates should be shown" do
@@ -53,16 +53,29 @@ describe "blurgh" do
       end
 
       it "the posts contents should be shown" do
-        article = File.readlines("spec/fixtures/code.md", "")[1].to_s
+        article = File.readlines("spec/fixtures/fifth.md", "")[1].to_s
         article.gsub!("\n", "") # ignore the newlines
         get '/'
-        last_response.body.should match(article)
+        last_response.body.should match article
       end
 
       it "should have the atom feed link" do
         get '/'
         last_response.body.to_s.should \
         match('<link href="feed.xml" type="application/atom\+xml" rel="alternate" title="Naslov')
+      end
+
+      it "should have pagination link" do
+        get '/'
+        last_response.body.to_s.should \
+        match "<a href='page/2'>"
+      end
+
+      context "pagination" do
+        it "should not match the third article" do
+          get '/'
+          last_response.body.to_s.should_not match "<a href='o-kapadokiji'>"
+        end
       end
 
       context "clicky" do
@@ -88,6 +101,31 @@ describe "blurgh" do
         end
       end
 
+    end
+
+    context "the pagination view" do
+      it "should exist" do
+        get '/page/2'
+        last_response.status.should be(200)
+      end
+
+      context "when on second page" do
+        it "should have a link to the index page" do
+          get '/page/2'
+          last_response.body.to_s.should match "<a href='/'>Previous"
+        end
+
+      end
+
+      context "when on a third page" do
+
+        it "should show the link to the next page"
+
+        it "should show the link to the previous page" do
+          get '/page/3'
+          last_response.body.to_s.should match "<a href='/'>Previous"
+        end
+      end
     end
 
     context "the post view" do
@@ -239,16 +277,30 @@ describe "blurgh" do
   end
 
   describe "get_posts" do
+    let(:store) { BlurghConfig.new.store }
 
-    it "should return posts" do
-      oldest_article = File.readlines("spec/fixtures/o-kapadokiji.md", "").drop(1).join
-      second_article = File.readlines("spec/fixtures/flight.md", "").drop(1).join
-      youngest_article = File.readlines("spec/fixtures/code.md", "").drop(1).join
-      store = BlurghConfig.new.store
+    let(:oldest_article) {
+      File.readlines("spec/fixtures/o-kapadokiji.md", "").drop(1).join
+    }
+    let(:fourth_article) {
+      File.readlines("spec/fixtures/fourth.md", "").drop(1).join
+    }
+    let(:third_article) {
+     File.readlines("spec/fixtures/code.md", "").drop(1).join
+    }
+    let(:youngest_article) {
+      File.readlines("spec/fixtures/fifth.md", "").drop(1).join
+    }
 
-      @posts = get_posts(store)
-      @posts.first.body.should == youngest_article
-      @posts.last.body.should == oldest_article
+    let(:posts) { get_posts(store) }
+
+    it { posts.first.body.should == youngest_article }
+    it { posts.last.body.should == oldest_article }
+
+    context "and the pagination only takes in the last page" do
+      let(:posts) { get_posts(store, 2, 2) }
+      it { posts.first.body.should == third_article }
+      it { posts.last.body.should match "Some code snippets" }
     end
 
   end
