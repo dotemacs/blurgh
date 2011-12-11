@@ -104,6 +104,14 @@ describe "blurgh" do
     end
 
     context "the pagination view" do
+      pending "should redirect for invalid pages" do
+        # TODO: it passes the example below, but complains about the
+        # YAML file not being read in the before block at the top
+        #
+        get '/page/1'
+        last_response.status.should be 302
+      end
+
       it "should exist" do
         get '/page/2'
         last_response.status.should be(200)

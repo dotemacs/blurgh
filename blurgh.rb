@@ -142,6 +142,9 @@ get '/:post' do
 end
 
 get '/page/:number' do
+  if params[:number].to_i < 2
+    redirect '/'
+  end
   @blurgh = BlurghConfig.new
   @posts = get_posts(@blurgh.store, params[:number], @blurgh.paginate)
   @current = params[:number].to_i
