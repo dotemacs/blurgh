@@ -119,11 +119,11 @@ describe "blurgh" do
 
       context "when on a third page" do
 
-        it "should show the link to the next page"
+        pending "should show the link to the next page only if it exists"
 
         it "should show the link to the previous page" do
           get '/page/3'
-          last_response.body.to_s.should match "<a href='/'>Previous"
+          last_response.body.to_s.should match "<a href='2'>Previous"
         end
       end
     end
@@ -279,17 +279,18 @@ describe "blurgh" do
   describe "get_posts" do
     let(:store) { BlurghConfig.new.store }
 
+    let(:youngest_article) {
+      File.readlines("spec/fixtures/fifth.md", "").drop(1).join
+    }
     let(:oldest_article) {
       File.readlines("spec/fixtures/o-kapadokiji.md", "").drop(1).join
     }
-    let(:fourth_article) {
-      File.readlines("spec/fixtures/fourth.md", "").drop(1).join
-    }
+
     let(:third_article) {
      File.readlines("spec/fixtures/code.md", "").drop(1).join
     }
-    let(:youngest_article) {
-      File.readlines("spec/fixtures/fifth.md", "").drop(1).join
+    let(:fourth_article) {
+      File.readlines("spec/fixtures/flight.md", "").drop(1).join
     }
 
     let(:posts) { get_posts(store) }
@@ -297,10 +298,10 @@ describe "blurgh" do
     it { posts.first.body.should == youngest_article }
     it { posts.last.body.should == oldest_article }
 
-    context "and the pagination only takes in the last page" do
+    context "and the pagination shows 3rd & 4th page" do
       let(:posts) { get_posts(store, 2, 2) }
       it { posts.first.body.should == third_article }
-      it { posts.last.body.should match "Some code snippets" }
+      it { posts.last.body.should == fourth_article }
     end
 
   end

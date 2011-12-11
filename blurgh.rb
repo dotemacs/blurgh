@@ -52,7 +52,9 @@ def get_posts(store, start=0, paginate=0)
   if start.to_i == 0
     all_posts.sort{|a,b| b.date <=> a.date}[0..(paginate.to_i - 1)]
   elsif (start.to_i != 0 and paginate.to_i != 0)
-    all_posts.sort{|a,b| b.date <=> a.date}[(start.to_i)..(paginate.to_i)]
+    from = (((start.to_i * paginate.to_i) - (paginate.to_i - 1)) - 1)
+    to = ((start.to_i * paginate.to_i) - 1)
+    all_posts.sort{|a,b| b.date <=> a.date}[from..to]
   else
     all_posts.sort{|a,b| b.date <=> a.date}
   end
@@ -141,6 +143,7 @@ end
 
 get '/page/:number' do
   @blurgh = BlurghConfig.new
-  @posts = get_posts(@blurgh.store, params[:number], params[:number])
+  @posts = get_posts(@blurgh.store, params[:number], @blurgh.paginate)
+  @current = params[:number].to_i
   haml :page
 end
